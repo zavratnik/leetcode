@@ -8,10 +8,8 @@ class TreeNode:
         self.right = right
 
 
-class Problem543:
-    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        self.max_diameter = 0
-
+class Problem110:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
         def dfs_height(node: Optional[TreeNode]) -> int:
             if not node:
                 return 0
@@ -19,13 +17,15 @@ class Problem543:
             left_height = dfs_height(node.left)
             right_height = dfs_height(node.right)
 
-            current_diameter = left_height + right_height
-            self.max_diameter = max(self.max_diameter, current_diameter)
+            if left_height == -1 or right_height == -1:
+                return -1
+
+            if abs(left_height - right_height) > 1:
+                return -1
 
             return 1 + max(left_height, right_height)
 
-        dfs_height(root)
-        return self.max_diameter
+        return dfs_height(root) != -1
 
 
 def build_tree_from_list(values):
@@ -51,7 +51,10 @@ def build_tree_from_list(values):
 
 
 if __name__ == "__main__":
-    solution = Problem543()
+    solution = Problem110()
 
-    root = build_tree_from_list([1, 2, 3, 4, 5])
-    print(solution.diameterOfBinaryTree(root))  # 3
+    root1 = build_tree_from_list([3, 9, 20, None, None, 15, 7])
+    print(solution.isBalanced(root1))  # True
+
+    root2 = build_tree_from_list([1, 2, 2, 3, 3, None, None, 4, 4])
+    print(solution.isBalanced(root2))  # False
