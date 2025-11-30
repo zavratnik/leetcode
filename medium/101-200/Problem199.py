@@ -9,30 +9,30 @@ class TreeNode:
         self.right = right
 
 
-class Problem102:
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+class Problem199:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
         if not root:
             return []
 
         q = deque()
         q.append(root)
 
-        arr: List[List[int]] = []
+        arr: List[int] = []
 
         while q:
             level_size = len(q)
-            current_level = []
 
-            for _ in range(level_size):
+            for i in range(level_size):
                 node = q.popleft()
-                current_level.append(node.val)  
+
+                # zadnji element v vsakem levelu je viden z desne
+                if i == level_size - 1:
+                    arr.append(node.val)
 
                 if node.left:
                     q.append(node.left)
                 if node.right:
                     q.append(node.right)
-
-            arr.append(current_level)
 
         return arr
 
@@ -60,8 +60,7 @@ def build_tree_from_list(values):
 
 
 if __name__ == "__main__":
-    solution = Problem102()
+    solution = Problem199()
 
-    root = build_tree_from_list([3, 9, 20, None, None, 15, 7])
-    print(solution.levelOrder(root))  
-    # [[3], [9, 20], [15, 7]]
+    root = build_tree_from_list([1, 2, 3, None, 5, None, 4])
+    print(solution.rightSideView(root))  # [1, 3, 4]
