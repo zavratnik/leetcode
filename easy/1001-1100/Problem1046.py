@@ -6,7 +6,6 @@ class Problem1046:
     def lastStoneWeight(self, stones: List[int]) -> int:
         heap: List[int] = []
 
-        # zgradimo max-heap z negativnimi vrednostmi
         for s in stones:
             heapq.heappush(heap, -s)
 
